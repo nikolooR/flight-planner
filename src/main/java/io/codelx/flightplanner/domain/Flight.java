@@ -1,93 +1,53 @@
 package io.codelx.flightplanner.domain;
 
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "Flight")
+@Table(name = "flights")
 public class Flight {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false)
     private Integer id;
-    private Airport from;
-    private Airport to;
+
+    @ManyToOne
+    @JoinColumn(name = "airport_from", nullable = false)
+    private Airport airportFrom;
+
+    @ManyToOne
+    @JoinColumn(name = "airport_to", nullable = false)
+    private Airport airportTo;
+
+    @Column(name = "carrier", nullable = false)
     private String carrier;
+
+    @Column(name = "departure_time", nullable = false)
     private LocalDateTime departureTime;
+
+    @Column(name = "arrival_time", nullable = false)
     private LocalDateTime arrivalTime;
-
-    public Flight(Integer id, Airport from, Airport to, String carrier, LocalDateTime departureTime, LocalDateTime arrivalTime) {
-        this.id = id;
-        this.from = from;
-        this.to = to;
-        this.carrier = carrier;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Airport getFrom() {
-        return from;
-    }
-
-    public void setFrom(Airport from) {
-        this.from = from;
-    }
-
-    public Airport getTo() {
-        return to;
-    }
-
-    public void setTo(Airport to) {
-        this.to = to;
-    }
-
-    public String getCarrier() {
-        return carrier;
-    }
-
-    public void setCarrier(String carrier) {
-        this.carrier = carrier;
-    }
-
-    public LocalDateTime getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public LocalDateTime getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(LocalDateTime arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Flight flight = (Flight) o;
-        return Objects.equals(from, flight.from) && Objects.equals(to, flight.to) && Objects.equals(carrier, flight.carrier) && Objects.equals(departureTime, flight.departureTime) && Objects.equals(arrivalTime, flight.arrivalTime);
+        return Objects.equals(airportFrom, flight.airportFrom) && Objects.equals(airportTo, flight.airportTo) && Objects.equals(carrier, flight.carrier) && Objects.equals(departureTime, flight.departureTime) && Objects.equals(arrivalTime, flight.arrivalTime);
     }
 
     @Override
-    public String toString() {
-        return "Flight{" +
-                "id=" + id +
-                ", from=" + from +
-                ", to=" + to +
-                ", carrier='" + carrier + '\'' +
-                ", departureTime='" + departureTime + '\'' +
-                ", arrivalTime='" + arrivalTime + '\'' +
-                '}';
+    public int hashCode() {
+        return Objects.hash(airportFrom, airportTo, carrier, departureTime, arrivalTime);
     }
 }

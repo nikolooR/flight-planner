@@ -1,4 +1,4 @@
-package io.codelx.flightplanner;
+package io.codelx.flightplanner.InMemory;
 
 import io.codelx.flightplanner.domain.Flight;
 import org.springframework.stereotype.Repository;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class FlightPlannerRepository {
+public class InMemoryFlightRepository {
     private final List<Flight> flights;
 
-    public FlightPlannerRepository() {
+    public InMemoryFlightRepository() {
         flights = new ArrayList<>();
     }
 

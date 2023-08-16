@@ -1,11 +1,11 @@
 package io.codelx.flightplanner.Controllers;
 
-import io.codelx.flightplanner.ClientSearchService;
+import io.codelx.flightplanner.response.PageResultResponse;
+import io.codelx.flightplanner.services.FlightService;
 import io.codelx.flightplanner.domain.Airport;
 import io.codelx.flightplanner.domain.Flight;
 import io.codelx.flightplanner.dto.FlightDTO;
 import io.codelx.flightplanner.request.CreateSearchFlightsRequest;
-import io.codelx.flightplanner.response.PageResultResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,25 +15,25 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
-    private ClientSearchService clientSearchService;
+    private FlightService flightService;
 
-    public CustomerController(ClientSearchService clientSearchService) {
-        this.clientSearchService = clientSearchService;
+    public CustomerController(FlightService flightService) {
+        this.flightService = flightService;
     }
 
     @GetMapping("/airports")
     public List<Airport> searchAirports(@RequestParam String search) {
-        return clientSearchService.searchAirports(search);
+        return flightService.searchAirports(search);
     }
 
     @PostMapping("/flights/search")
     public PageResultResponse<Flight> searchFlights(@Valid @RequestBody CreateSearchFlightsRequest request) {
-        return clientSearchService.searchFlight(request);
+        return flightService.searchFlights(request);
     }
 
     @GetMapping("/flights/{id}")
     public FlightDTO findFlightById(@PathVariable Integer id) {
-        return clientSearchService.findFlightByID(id);
+        return flightService.findFlightByID(id);
     }
 
 }

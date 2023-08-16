@@ -1,6 +1,6 @@
 package io.codelx.flightplanner.Controllers;
 
-import io.codelx.flightplanner.FlightPlannerService;
+import io.codelx.flightplanner.services.FlightService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/testing-api")
 @RestController
 public class TestingClientController {
-    private final FlightPlannerService flightPlannerService;
+    private final FlightService flightService;
 
-    public TestingClientController(FlightPlannerService flightPlannerService) {
-        this.flightPlannerService = flightPlannerService;
+    public TestingClientController(FlightService flightService) {
+        this.flightService = flightService;
     }
 
     @PostMapping("/clear")
     public void clear() {
-        flightPlannerService.clear();
+        flightService.clear();
     }
 
 }
